@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: interview-assistant-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: LLM_BACKEND
+        value: huggingface_api
+      - key: HF_MODEL_ID
+        value: meta-llama/Llama-3.1-8B-Instruct
+      - key: GROQ_API_KEY
+        sync: false
+      - key: HF_TOKEN
+        sync: false
+      - key: WHISPER_MODEL_SIZE
+        value: base.en
+      - key: WHISPER_DEVICE
+        value: cpu
+      - key: WHISPER_COMPUTE_TYPE
+        value: int8
+      - key: DEVICE
+        value: cpu
